@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f2f8f5">
+    <title>"The Flow of Change"</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="#main" aria-label="charity: water game home">
+            <img src="img/cw_logo_horizontal.png" alt="charity: water">
+        </a>
+        <p class="header-note">THE FLOW OF CHANGE <span> / </span> CHARITY:WATER GAME</p>
+    </header>
+
+    <main id="main" class="page-layout">
+        <section class="game-intro" aria-labelledby="game-title">
+            <p class="eyebrow">A GAME INSPIRED BY CHARITY: WATER</p>
+            <h1 id="game-title">The Flow<br><span>of Change</span></h1>
+            <p class="intro-copy">
+            Access to clean and safe water is challenge for many communities around the world, many of which are in isolated rural areas.</p>
+            <p>
+            Use the arrow keys to guide the Jerry Can through three routes to connect each community with clean water.</p>
+            <p>Collect water drops along the way to score extra points!</p>
+        </section>
+
+        <section class="game-panel" aria-label="The Flow of Change maze game">
+            <div class="scoreboard">
+                <div class="stat-block">
+                    <span class="stat-label">LEVEL</span>
+                    <span class="stat-value"><span id="level-number">1</span><span class="stat-divider"> / 3</span></span>
+                </div>
+                <div class="stat-block score-block">
+                    <span class="stat-label">SCORE</span>
+                    <span class="stat-value"><span id="score-number">0</span><span class="stat-divider"> / 60 PTS</span></span>
+                </div>
+            </div>
+
+            <p id="game-status" class="game-status" role="status" aria-live="polite">Find the way through the maze.</p>
+            <div id="maze" class="maze" role="img" aria-label="Maze route 1 of 3"></div>
+
+            <div class="game-controls">
+                <div class="direction-pad" aria-label="Direction controls">
+                    <button class="direction-button up-button" type="button" data-direction="up" aria-label="Move up">&#8593;</button>
+                    <button class="direction-button left-button" type="button" data-direction="left" aria-label="Move left">&#8592;</button>
+                    <button class="direction-button down-button" type="button" data-direction="down" aria-label="Move down">&#8595;</button>
+                    <button class="direction-button right-button" type="button" data-direction="right" aria-label="Move right">&#8594;</button>
+                </div>
+                <button id="restart-button" class="restart-button" type="button" aria-label="Restart game" title="Restart game">
+                    <span aria-hidden="true">&#8635;</span>
+                    <span>RESTART</span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
