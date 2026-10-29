@@ -67,16 +67,16 @@ const difficultyName = document.getElementById('difficulty-name');
 
 const impactMessages = [
   {
-    message: 'In 2022, 2.2 billion people lacked safely managed drinking water. Reliable access closer to home can reduce the time families spend collecting water.',
-    source: 'Source: WHO/UNICEF Joint Monitoring Programme, 2023.'
+    message: '"696 million people in the world live without clean water. That’s nearly 1 in 10 people worldwide. Or, twice the population of the United States." Clean water is essential for all life, and ',
+    source: 'via. charitywater.org'
   },
   {
-    message: 'Women and girls are often responsible for collecting water. When water is nearby, that time can go toward school, work, rest, and family.',
-    source: 'Source: WHO/UNICEF Joint Monitoring Programme, Progress on household drinking water, sanitation and hygiene 2000–2022.'
+    message: '"Women and girls are responsible for water collection in 7 out of 10 households with water off premises." As clean water becomes more accessible, these women and girls get their lives back and are able to go to school, work, and spend time with their families!',
+    source: 'via. charitywater.org'
   },
   {
-    message: 'Reliable access to safe water supports health, learning, and daily life. A lasting solution must keep water services available and safe over time.',
-    source: 'Source: WHO/UNICEF Joint Monitoring Programme.'
+    message: '"Diseases from dirty water kill more people every year than all forms of violence, including war." Access to clean water improves sanitation and helps prevent illnesses in these communities!',
+    source: 'via. charity: water'
   }
 ];
 
@@ -204,7 +204,7 @@ function showImpactScreen() {
   gameIsStarted = false;
   gameIsComplete = isFinalLevel;
   impactTitle.textContent = isFinalLevel
-    ? `All ${levels.length} routes complete!`
+    ? `All ${levels.length} communities reached! Your final score is ${score} points!`
     : `Route ${currentLevel + 1} complete`;
   impactMessage.textContent = impact.message;
   impactSource.textContent = impact.source;
@@ -215,7 +215,7 @@ function showImpactScreen() {
   impactTitle.focus();
 
   if (isFinalLevel) {
-    impactMessage.textContent += ` Your final score is ${score} points.`;
+    impactMessage.textContent += 'Thank you for playing!';
   }
 }
 
