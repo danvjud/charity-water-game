@@ -1,49 +1,116 @@
-// # is a wall, . is a path, S is the start, G is the goal, and D is a water drop.
+// Maze rules: # is a wall, . is a path, S is the start, G is the goal, and D is a water drop.
+// Edit each difficulty's rows directly; every row in a map must have the same width.
 const levels = [
   {
-    easyOpen: [{ x: 4, y: 1 }, { x: 7, y: 5 }],
-    hardClose: [{ x: 2, y: 1 }, { x: 3, y: 5 }],
-    map: [
-      '#########',
-      '#S..#...#',
-      '#.#.#.#.#',
-      '#.#...#.#',
-      '#...#...#',
-      '###.#.###',
-      '#.....#G#',
-      '#.D#....#',
-      '#########'
-    ]
+    maps: {
+      easy: [
+        '#########',
+        '#S#.....#',
+        '#...###.#',
+        '#.#...#.#',
+        '#.###...#',
+        '#...D.###',
+        '#.##..#.#',
+        '#G......#',
+        '#########'
+      ],
+      normal: [
+        '#########',
+        '#S..#...#',
+        '#.#.#.#.#',
+        '#.#...#.#',
+        '#...#...#',
+        '###.#.###',
+        '#.....#G#',
+        '#.D#....#',
+        '#########'
+      ],
+      hard: [
+        '#########',
+        '#S#.#...#',
+        '#.#.#.#.#',
+        '#.#...#.#',
+        '#...#...#',
+        '#####.###',
+        '#.....#G#',
+        '#.D#....#',
+        '#########'
+      ]
+    }
   },
   {
-    easyOpen: [{ x: 5, y: 1 }, { x: 2, y: 2 }],
-    hardClose: [{ x: 1, y: 2 }, { x: 7, y: 5 }],
-    map: [
-      '#########',
-      '#S...#.D#',
-      '#.##.#..#',
-      '#.#.....#',
-      '#...###.#',
-      '###.....#',
-      '#.#.#.#G#',
-      '#.D.#...#',
-      '#########'
-    ]
+    maps: {
+      easy: [
+        '#########',
+        '#S.....D#',
+        '#.##.#..#',
+        '#.#.....#',
+        '#...###.#',
+        '#.#.....#',
+        '#.#.#.#G#',
+        '#.D.#...#',
+        '#########'
+      ],
+      normal: [
+        '#########',
+        '#S...#.D#',
+        '#.##.#..#',
+        '#.#.....#',
+        '#...###.#',
+        '###.....#',
+        '#.#.#.#G#',
+        '#.D.#...#',
+        '#########'
+      ],
+      hard: [
+        '#########',
+        '#S...#.D#',
+        '####.#..#',
+        '#.#.....#',
+        '#...###.#',
+        '###....##',
+        '#.#.#.#G#',
+        '#.D.#...#',
+        '#########'
+      ]
+    }
   },
   {
-    easyOpen: [{ x: 2, y: 1 }, { x: 7, y: 5 }],
-    hardClose: [{ x: 5, y: 3 }, { x: 3, y: 5 }],
-    map: [
-      '#########',
-      '#S#....D#',
-      '#.#.#.#.#',
-      '#.#D..#.#',
-      '#...#...#',
-      '###.#.###',
-      '#D#.#.#G#',
-      '#.......#',
-      '#########'
-    ]
+    maps: {
+      easy: [
+        '#########',
+        '#S.....D#',
+        '#.#.#.#.#',
+        '#.#D..#.#',
+        '#...#...#',
+        '###.#..##',
+        '#D#.#.#G#',
+        '#.......#',
+        '#########'
+      ],
+      normal: [
+        '#########',
+        '#S#....D#',
+        '#.#.#.#.#',
+        '#.#D..#.#',
+        '#...#...#',
+        '###.#.###',
+        '#D#.#.#G#',
+        '#.......#',
+        '#########'
+      ],
+      hard: [
+        '#########',
+        '#S...#.D#',
+        '####.#..#',
+        '#.D#.##.#',
+        '#.......#',
+        '#####.###',
+        '#D#.#.#G#',
+        '#.......#',
+        '#########'
+      ]
+    }
   }
 ];
 
@@ -67,13 +134,14 @@ const difficultyName = document.getElementById('difficulty-name');
 
 const impactMessages = [
   {
-    message: '"696 million people in the world live without clean water. That’s nearly 1 in 10 people worldwide. Or, twice the population of the United States." Clean water is essential for all life, and ',
-    source: 'via. charitywater.org'
-  },
-  {
     message: '"Women and girls are responsible for water collection in 7 out of 10 households with water off premises." As clean water becomes more accessible, these women and girls get their lives back and are able to go to school, work, and spend time with their families!',
     source: 'via. charitywater.org'
   },
+ {
+  message: '"696 million people in the world live without clean water. That’s nearly 1 in 10 people worldwide. Or, twice the population of the United States." Clean water is essential for all life, and creating sustainable access to it is key to improving communities around the world.',
+  source: 'via. charitywater.org'  
+},
+
   {
     message: '"Diseases from dirty water kill more people every year than all forms of violence, including war." Access to clean water improves sanitation and helps prevent illnesses in these communities!',
     source: 'via. charity: water'
@@ -90,18 +158,7 @@ let selectedDifficulty = 'normal';
 
 // Turn the level's text map into rows that can change during the game.
 function loadLevel() {
-  maze = levels[currentLevel].map.map(row => row.split(''));
-  const level = levels[currentLevel];
-
-  if (selectedDifficulty === 'easy') {
-    level.easyOpen.forEach(({ x, y }) => {
-      maze[y][x] = '.';
-    });
-  } else if (selectedDifficulty === 'hard') {
-    level.hardClose.forEach(({ x, y }) => {
-      maze[y][x] = '#';
-    });
-  }
+  maze = levels[currentLevel].maps[selectedDifficulty].map(row => row.split(''));
 
   for (let y = 0; y < maze.length; y++) {
     for (let x = 0; x < maze[y].length; x++) {
@@ -140,6 +197,11 @@ function drawMaze() {
 
       if (cellType === 'G') {
         cell.classList.add('goal');
+        const goalIcon = document.createElement('img');
+        goalIcon.src = 'img/goal-users.svg';
+        goalIcon.alt = '';
+        goalIcon.classList.add('goal-icon');
+        cell.appendChild(goalIcon);
       }
 
       if (x === playerPosition.x && y === playerPosition.y) {
@@ -215,7 +277,7 @@ function showImpactScreen() {
   impactTitle.focus();
 
   if (isFinalLevel) {
-    impactMessage.textContent += 'Thank you for playing!';
+    impactMessage.textContent += 'Thank you for playing and please consider donating!';
   }
 }
 

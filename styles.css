@@ -350,14 +350,10 @@ h1 span {
   box-shadow: 0 2px 5px rgb(46 157 247 / 25%);
 }
 
-.maze-cell.goal::after {
-  width: 55%;
-  height: 55%;
-  border: 3px solid var(--orange);
-  border-radius: 50%;
-  background: var(--yellow);
-  content: "";
-  box-shadow: 0 0 0 3px rgb(21 154 72 / 12%);
+.goal-icon {
+  width: 62%;
+  height: 62%;
+  object-fit: contain;
 }
 
 .maze-cell.player-cell {
