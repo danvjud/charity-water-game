@@ -78,13 +78,14 @@ body {
   min-height: calc(100vh - 87px);
   margin: 0 auto;
   padding: 56px 0 64px;
-  display: grid;
-  grid-template-columns: minmax(240px, 0.78fr) minmax(420px, 1.22fr);
-  align-items: center;
-  gap: clamp(38px, 7vw, 92px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .game-intro {
+  width: min(100%, 620px);
+  margin: 0 auto;
   padding-bottom: 16px;
   animation: arrive 500ms ease-out both;
 }
@@ -116,6 +117,30 @@ h1 span {
   line-height: 1.65;
 }
 
+.start-button {
+  min-height: 46px;
+  margin-top: 16px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--yellow);
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background-color 120ms ease, transform 120ms ease;
+}
+
+.start-button:hover {
+  background: #f0b900;
+}
+
+.start-button:active {
+  transform: translateY(1px);
+}
+
 .mission-mark {
   margin-top: 54px;
   display: flex;
@@ -125,12 +150,42 @@ h1 span {
 }
 
 .game-panel {
+  width: min(100%, 620px);
+  margin: 0 auto;
   padding: clamp(20px, 3vw, 34px);
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--white);
   box-shadow: 0 18px 50px rgb(23 61 56 / 9%);
   animation: arrive 600ms 100ms ease-out both;
+}
+
+.impact-screen {
+  width: min(100%, 680px);
+  margin: 0 auto;
+  padding: 18px 0;
+  animation: arrive 350ms ease-out both;
+}
+
+.impact-screen h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 38px;
+  font-weight: 500;
+}
+
+.impact-message {
+  max-width: 600px;
+  margin: 24px 0 12px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.impact-source {
+  margin: 0;
+  color: #64746f;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .scoreboard {
@@ -283,9 +338,14 @@ h1 span {
 
 .direction-button:focus-visible,
 .restart-button:focus-visible,
-.brand:focus-visible {
+.brand:focus-visible,
+.start-button:focus-visible {
   outline: 3px solid var(--blue);
   outline-offset: 3px;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 .up-button {
@@ -372,8 +432,6 @@ h1 span {
   .page-layout {
     min-height: auto;
     padding: 40px 0 48px;
-    grid-template-columns: 1fr;
-    gap: 30px;
   }
 
   .game-intro {
@@ -394,12 +452,16 @@ h1 span {
     font-size: 14px;
   }
 
-  .mission-mark {
-    margin-top: 22px;
-  }
-
   .game-panel {
     padding: 18px;
+  }
+
+  .impact-screen h2 {
+    font-size: 32px;
+  }
+
+  .impact-message {
+    font-size: 16px;
   }
 }
 

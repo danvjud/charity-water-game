@@ -47,12 +47,36 @@ const scoreNumber = document.getElementById('score-number');
 const gameStatus = document.getElementById('game-status');
 const restartButton = document.getElementById('restart-button');
 const directionButtons = document.querySelectorAll('[data-direction]');
+const startScreen = document.getElementById('start-screen');
+const gameView = document.getElementById('game-view');
+const impactScreen = document.getElementById('impact-screen');
+const impactTitle = document.getElementById('impact-title');
+const impactMessage = document.getElementById('impact-message');
+const impactSource = document.getElementById('impact-source');
+const startButton = document.getElementById('start-button');
+const continueButton = document.getElementById('continue-button');
+
+const impactMessages = [
+  {
+    message: 'In 2022, 2.2 billion people lacked safely managed drinking water. Reliable access closer to home can reduce the time families spend collecting water.',
+    source: 'Source: WHO/UNICEF Joint Monitoring Programme, 2023.'
+  },
+  {
+    message: 'Women and girls are often responsible for collecting water. When water is nearby, that time can go toward school, work, rest, and family.',
+    source: 'Source: WHO/UNICEF Joint Monitoring Programme, Progress on household drinking water, sanitation and hygiene 2000–2022.'
+  },
+  {
+    message: 'Reliable access to safe water supports health, learning, and daily life. A lasting solution must keep water services available and safe over time.',
+    source: 'Source: WHO/UNICEF Joint Monitoring Programme.'
+  }
+];
 
 let currentLevel = 0;
 let score = 0;
 let maze = [];
 let playerPosition = { x: 1, y: 1 };
 let gameIsComplete = false;
+let gameIsStarted = false;
 
 // Turn the level's text map into rows that can change during the game.
 function loadLevel() {
@@ -117,7 +141,7 @@ function drawMaze() {
 
 // Move one tile, but only if it is inside the maze and is not a wall.
 function movePlayer(changeX, changeY) {
-  if (gameIsComplete) {
+  if (!gameIsStarted || gameIsComplete) {
     return;
   }
 
@@ -141,20 +165,56 @@ function movePlayer(changeX, changeY) {
     score += 10;
     gameStatus.textContent = 'Water drop found! 10 points added.';
   } else if (nextCell === 'G') {
-    if (currentLevel === levels.length - 1) {
-      gameIsComplete = true;
-      gameStatus.textContent = `All three routes complete! Final score: ${score} points.`;
-    } else {
-      currentLevel++;
-      gameStatus.textContent = `Route ${currentLevel} complete. On to the next community!`;
-      loadLevel();
-      return;
-    }
+    showImpactScreen();
+    return;
   } else {
     gameStatus.textContent = 'Find the way through the maze.';
   }
 
   drawMaze();
+}
+
+// Show one impact message after each route, before the next maze begins.
+function showImpactScreen() {
+  const isFinalLevel = currentLevel === levels.length - 1;
+  const impact = impactMessages[currentLevel];
+
+  gameIsStarted = false;
+  gameIsComplete = isFinalLevel;
+  impactTitle.textContent = isFinalLevel
+    ? `All ${levels.length} routes complete!`
+    : `Route ${currentLevel + 1} complete`;
+  impactMessage.textContent = impact.message;
+  impactSource.textContent = impact.source;
+  continueButton.textContent = isFinalLevel ? 'PLAY AGAIN' : `CONTINUE TO ROUTE ${currentLevel + 2}`;
+  gameView.hidden = true;
+  impactScreen.hidden = false;
+
+  if (isFinalLevel) {
+    impactMessage.textContent += ` Your final score is ${score} points.`;
+  }
+}
+
+function startGame() {
+  gameIsStarted = true;
+  gameIsComplete = false;
+  gameStatus.textContent = 'Find the way through the maze.';
+  startScreen.hidden = true;
+  impactScreen.hidden = true;
+  gameView.hidden = false;
+  loadLevel();
+}
+
+function restartGame() {
+  currentLevel = 0;
+  score = 0;
+  gameIsComplete = false;
+  gameIsStarted = true;
+  gameStatus.textContent = 'Find the way through the maze.';
+  impactScreen.hidden = true;
+  startScreen.hidden = true;
+  gameView.hidden = false;
+  loadLevel();
 }
 
 // Use the same movement function for the keyboard and the on-screen buttons.
@@ -183,12 +243,24 @@ directionButtons.forEach(button => {
   });
 });
 
-restartButton.addEventListener('click', () => {
-  currentLevel = 0;
-  score = 0;
-  gameIsComplete = false;
-  gameStatus.textContent = 'Find the way through the maze.';
+startButton.addEventListener('click', startGame);
+
+continueButton.addEventListener('click', () => {
+  if (gameIsComplete) {
+    currentLevel = 0;
+    score = 0;
+    gameIsComplete = false;
+    impactScreen.hidden = true;
+    startScreen.hidden = false;
+    return;
+  }
+
+  currentLevel++;
+  gameIsStarted = true;
+  gameStatus.textContent = `Route ${currentLevel + 1}: find the way through the maze.`;
+  impactScreen.hidden = true;
+  gameView.hidden = false;
   loadLevel();
 });
 
-loadLevel();
+restartButton.addEventListener('click', restartGame);
