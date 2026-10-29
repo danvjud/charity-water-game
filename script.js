@@ -1,6 +1,8 @@
 // # is a wall, . is a path, S is the start, G is the goal, and D is a water drop.
 const levels = [
   {
+    easyOpen: [{ x: 4, y: 1 }, { x: 7, y: 5 }],
+    hardClose: [{ x: 2, y: 1 }, { x: 3, y: 5 }],
     map: [
       '#########',
       '#S..#...#',
@@ -14,6 +16,8 @@ const levels = [
     ]
   },
   {
+    easyOpen: [{ x: 5, y: 1 }, { x: 2, y: 2 }],
+    hardClose: [{ x: 1, y: 2 }, { x: 7, y: 5 }],
     map: [
       '#########',
       '#S...#.D#',
@@ -27,6 +31,8 @@ const levels = [
     ]
   },
   {
+    easyOpen: [{ x: 2, y: 1 }, { x: 7, y: 5 }],
+    hardClose: [{ x: 5, y: 3 }, { x: 3, y: 5 }],
     map: [
       '#########',
       '#S#....D#',
@@ -55,6 +61,9 @@ const impactMessage = document.getElementById('impact-message');
 const impactSource = document.getElementById('impact-source');
 const startButton = document.getElementById('start-button');
 const continueButton = document.getElementById('continue-button');
+const finalDonationLink = document.getElementById('final-donation-link');
+const difficultySelect = document.getElementById('difficulty-select');
+const difficultyName = document.getElementById('difficulty-name');
 
 const impactMessages = [
   {
@@ -77,10 +86,22 @@ let maze = [];
 let playerPosition = { x: 1, y: 1 };
 let gameIsComplete = false;
 let gameIsStarted = false;
+let selectedDifficulty = 'normal';
 
 // Turn the level's text map into rows that can change during the game.
 function loadLevel() {
   maze = levels[currentLevel].map.map(row => row.split(''));
+  const level = levels[currentLevel];
+
+  if (selectedDifficulty === 'easy') {
+    level.easyOpen.forEach(({ x, y }) => {
+      maze[y][x] = '.';
+    });
+  } else if (selectedDifficulty === 'hard') {
+    level.hardClose.forEach(({ x, y }) => {
+      maze[y][x] = '#';
+    });
+  }
 
   for (let y = 0; y < maze.length; y++) {
     for (let x = 0; x < maze[y].length; x++) {
@@ -98,6 +119,7 @@ function loadLevel() {
 function drawMaze() {
   mazeElement.innerHTML = '';
   mazeElement.setAttribute('aria-label', `Maze route ${currentLevel + 1} of ${levels.length}`);
+  difficultyName.textContent = difficultySelect.options[difficultySelect.selectedIndex].textContent;
 
   for (let y = 0; y < maze.length; y++) {
     for (let x = 0; x < maze[y].length; x++) {
@@ -186,9 +208,11 @@ function showImpactScreen() {
     : `Route ${currentLevel + 1} complete`;
   impactMessage.textContent = impact.message;
   impactSource.textContent = impact.source;
+  finalDonationLink.hidden = !isFinalLevel;
   continueButton.textContent = isFinalLevel ? 'PLAY AGAIN' : `CONTINUE TO ROUTE ${currentLevel + 2}`;
   gameView.hidden = true;
   impactScreen.hidden = false;
+  impactTitle.focus();
 
   if (isFinalLevel) {
     impactMessage.textContent += ` Your final score is ${score} points.`;
@@ -196,6 +220,7 @@ function showImpactScreen() {
 }
 
 function startGame() {
+  selectedDifficulty = difficultySelect.value;
   gameIsStarted = true;
   gameIsComplete = false;
   gameStatus.textContent = 'Find the way through the maze.';
@@ -203,6 +228,7 @@ function startGame() {
   impactScreen.hidden = true;
   gameView.hidden = false;
   loadLevel();
+  gameStatus.focus();
 }
 
 function restartGame() {
@@ -252,6 +278,7 @@ continueButton.addEventListener('click', () => {
     gameIsComplete = false;
     impactScreen.hidden = true;
     startScreen.hidden = false;
+    startButton.focus();
     return;
   }
 
@@ -261,6 +288,7 @@ continueButton.addEventListener('click', () => {
   impactScreen.hidden = true;
   gameView.hidden = false;
   loadLevel();
+  gameStatus.focus();
 });
 
 restartButton.addEventListener('click', restartGame);

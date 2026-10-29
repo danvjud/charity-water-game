@@ -73,6 +73,41 @@ body {
   color: var(--blue);
 }
 
+.donation-button {
+  min-height: 44px;
+  max-width: 100%;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 3px;
+  background: var(--yellow);
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1.4;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 120ms ease, transform 120ms ease;
+}
+
+.donation-button:hover {
+  background: #f0b900;
+}
+
+.donation-button:active {
+  transform: translateY(1px);
+}
+
+.final-donation-button {
+  margin: 24px 12px 0 0;
+  padding: 10px 16px;
+}
+
 .page-layout {
   width: min(1160px, calc(100% - 48px));
   min-height: calc(100vh - 87px);
@@ -141,6 +176,44 @@ h1 span {
   transform: translateY(1px);
 }
 
+.difficulty-control {
+  max-width: 350px;
+  margin-top: 24px;
+  display: grid;
+  gap: 8px;
+}
+
+.difficulty-control label {
+  color: var(--grey);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.difficulty-control select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--white);
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.difficulty-control select:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.difficulty-help {
+  margin: 0;
+  color: #64746f;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 .mission-mark {
   margin-top: 54px;
   display: flex;
@@ -191,16 +264,20 @@ h1 span {
 .scoreboard {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 10px;
 }
 
 .stat-block {
-  min-width: 100px;
+  min-width: 0;
   display: grid;
   gap: 7px;
 }
 
 .score-block {
+  text-align: right;
+}
+
+.difficulty-block {
   text-align: right;
 }
 
@@ -210,7 +287,7 @@ h1 span {
 
 .stat-value {
   color: var(--orange);
-  font-size: 25px;
+  font-size: clamp(18px, 3vw, 25px);
   font-weight: 800;
   line-height: 1;
 }
@@ -339,7 +416,8 @@ h1 span {
 .direction-button:focus-visible,
 .restart-button:focus-visible,
 .brand:focus-visible,
-.start-button:focus-visible {
+.start-button:focus-visible,
+.donation-button:focus-visible {
   outline: 3px solid var(--blue);
   outline-offset: 3px;
 }
@@ -429,6 +507,10 @@ h1 span {
     font-size: 8px;
   }
 
+  .site-header {
+    gap: 12px;
+  }
+
   .page-layout {
     min-height: auto;
     padding: 40px 0 48px;
@@ -462,6 +544,12 @@ h1 span {
 
   .impact-message {
     font-size: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .header-note {
+    display: none;
   }
 }
 

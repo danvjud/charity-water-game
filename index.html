@@ -13,9 +13,7 @@
             <img src="img/cw_logo_horizontal.png" alt="charity: water">
         </a>
         <p class="header-note">THE FLOW OF CHANGE <span> / </span> CHARITY:WATER GAME</p>
-        <button class="donation-button">
-          donate
-        </button>
+        <a class="donation-button" href="https://www.charitywater.org/donate" aria-label="Donate to charity: water">Donate</a>
     </header>
 
     <main id="main" class="page-layout">
@@ -27,6 +25,14 @@
             <p>
             Use the arrow keys to guide the Jerry Can through three routes to connect each community with clean water.</p>
             <p>Collect water drops along the way to score extra points!</p>
+            <div class="difficulty-control">
+                <label for="difficulty-select">CHOOSE YOUR DIFFICULTY</label>
+                <select id="difficulty-select">
+                    <option value="easy">Easy</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
             <button id="start-button" class="start-button" type="button">START GAME</button>
         </section>
 
@@ -40,9 +46,13 @@
                     <span class="stat-label">SCORE</span>
                     <span class="stat-value"><span id="score-number">0</span><span class="stat-divider"> / 60 PTS</span></span>
                 </div>
+                <div class="stat-block difficulty-block">
+                    <span class="stat-label">DIFFICULTY</span>
+                    <span id="difficulty-name" class="stat-value">Normal</span>
+                </div>
             </div>
 
-            <p id="game-status" class="game-status" role="status" aria-live="polite">Find the way through the maze.</p>
+            <p id="game-status" class="game-status" role="status" aria-live="polite" tabindex="-1">Find the way through the maze.</p>
             <div id="maze" class="maze" role="img" aria-label="Maze route 1 of 3"></div>
 
             <div class="game-controls">
@@ -61,9 +71,10 @@
 
         <section id="impact-screen" class="impact-screen" aria-labelledby="impact-title" hidden>
             <p class="eyebrow">WATER CHANGES EVERYTHING</p>
-            <h2 id="impact-title">Route complete</h2>
+            <h2 id="impact-title" tabindex="-1">Route complete</h2>
             <p id="impact-message" class="impact-message"></p>
             <p id="impact-source" class="impact-source"></p>
+            <a id="final-donation-link" class="donation-button final-donation-button" href="https://www.charitywater.org/donate" hidden>Consider donating to help bring clean water to more communities</a>
             <button id="continue-button" class="start-button" type="button">CONTINUE</button>
         </section>
     </main>
